@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Perfil de Proyecto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+        }
+        .title {
+            margin: 2px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 3px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .des {
+            width: 200px;
+        }
+        .textfirma {
+            text-align: center;
+        }
+        .text {
+            text-align: center;
+            font-size: 25px;
+        }
+        .text1 {
+            text-align: center;
+            font-size: 18px;
+        }
+        .firma {
+            width: 100px; /* Ajusta el tamaño de la firma */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text">UNIVERSIDAD AUTONOMA DEL BENI JOSE BALLIVIAN</h1>
+    <h2 class="text1">CARRERA DE INGENIERIA DE SISTEMAS</h2>
+    
+    {% for actividad in perfiles %}
+    <h3 class="title">REPORTE DE PERFIL DE PROYECTO</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Estudiante</th>
+                <th>Título</th>
+                <th>Modalidad Optada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ actividad.perfecha_creacion }}</td>
+                <td>{{ actividad.user.apellido }} {{ actividad.user.nombre }}</td>
+                <td class="des">{{ actividad.pertitulo }}</td>
+                <td>{{ actividad.permodalidad }}</td>
+            </tr>
+        </tbody>
+
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>El Documento Fue</th>
+                <th>Revisión</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="des">{{ actividad.perdescripcion }}</td>
+                <td>{{ actividad.perestado }}</td>
+                <td class="des">
+                    {% for comentario in actividad.comentarios_list %}
+                    {{ comentario.user.apellido }} {{ comentario.user.nombre }}<br>
+                        {{ comentario.percomentario }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+    {% endfor %}
+    
+    {% if perfiles|length > 0 and perfiles.0.comentarios_list|length > 0 %}
+        {% with comentario=perfiles.0.comentarios_list.0 %}
+            <ul>
+                {% if comentario.user.firma_url %}
+                    <img src="{{ comentario.user.firma_url }}" alt="Firma" class="firma"><br>
+                {% else %}
+                    <p>Sin firma disponible</p>
+                {% endif %}
+                <span class="textfirma">{{ comentario.user.apellido }} {{ comentario.user.nombre }}<br>
+                Docente Modalidad Graduación</span>
+            </ul>
+        {% endwith %}
+    {% endif %}
+</body>
+
+</html>

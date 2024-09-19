@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Defensa Privada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+        }
+        .title {
+            font-size: 13px;
+            margin: 2px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 2px;
+            font-size: 12px;
+        }
+        .descrip{
+            width: 600px;
+        }
+        .descripcion{
+            text-align: center;
+            font-size: 13px;
+        }
+        .des {
+            width: 200px;
+            background: #d0d4db;
+        }
+        .contfirma {
+            width: 300px;
+            
+        }
+        .contfirmapresidente {
+            width: 300px;
+            text-align: center;
+            font-weight: bold;
+            
+        }
+        .lugar {
+            width: 260px;
+            
+        }
+        #descrip{
+            text-align: left;
+        }
+        .textfirma {
+            text-align: center;
+        }
+        .text {
+            text-align: center;
+            font-size: 25px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 18px;
+        }
+        .text1 {
+            
+            font-size: 15px;
+        }
+        .firma {
+            width: 100px; /* Ajusta el tamaño de la firma */
+            height: 50px;
+            margin-top: 10px;
+        }
+        #firm{
+            border: 1px solid #ffffff;
+        }
+        
+    </style>
+   
+</head>
+<body>
+    <h1 class="text">UNIVERSIDAD AUTONOMA DEL BENI JOSE BALLIVIAN <apan class="subtitle">ACTA DEFENSA PUBLICA </span>
+    </h1>
+    <table>
+        <h3 class="descripcion">PERIODO Y GESTION: {{ acta.perperiodo }}</h3>
+        <thead>
+            <tr>
+                <th class="des">Facultad </th>
+                <th id="descrip">{{ acta.get_facultad_display }}</th>
+            </tr>
+            <tr>
+                <th class="des">Carrera </th>
+                <th id="descrip">{{ acta.get_carrera_display }}</th>
+            </tr>
+            <tr>
+                <th class="des">Modalidad </th>
+                <th id="descrip">{{ acta.modalidad }}</th>
+            </tr>
+            <tr>
+                <th class="des">Postulante </th>
+                <th id="descrip">Nombre Completo: {{ acta.estudiante.apellido }} {{ acta.estudiante.nombre }} </th>
+            </tr>
+            <tr>
+                <th class="des">Titulo </th>
+                <th id="descrip">{{ acta.titulo }}</th>
+            </tr>
+            <tr>
+                <th class="des">Tutor del Proyecto </th>
+                <th id="descrip">Nombre COmpleto: {{ acta.tutor.apellido }} {{ acta.tutor.nombre }}</th>
+            </tr>
+            
+        </thead>
+    </table>
+    <table> 
+       <thead>
+            <tr>
+                <th class="des">Lugar y Fecha</th>
+                <th class="lugar">{{ acta.lugar }}</th>
+                <th class="lugar">{{ acta.fechadefensa }}</th>
+            </tr>
+            <tr>
+                <th class="des">Hora de Defensa </th>
+                <th class="lugar">Inicio :{{ acta.horainicio }}</th>
+                <th class="lugar">Finalización :{{ acta.horafin }}</th>
+            </tr>
+            
+            
+        </thead>
+    </table>
+    <table>
+        <thead>
+            <h5 class="descripcion">TRIBUNAL EVALUADOR</h5>
+            <tr>
+                <th class="des">Presidente </th>
+                <th id="descrip">Nombre Completo: {{ acta.presidenteacta.apellido }} {{ acta.presidenteacta.nombre }}</th>
+            </tr>
+            <tr>
+                <th class="des">1er. Tribunal </th>
+                <th id="descrip">Nombre Completo: {{ acta.jurado_1.apellido }} {{ acta.jurado_1.nombre }} </th>
+            </tr>
+            <tr>
+                <th class="des">2do. Tribunal </th>
+                <th id="descrip">Nombre Completo: {{ acta.jurado_2.apellido }} {{ acta.jurado_2.nombre }}</th>
+            </tr>
+            <tr>
+                <th class="des">3er. Tribunal </th>
+                <th id="descrip">Nombre Completo: {{ acta.jurado_3.apellido }} {{ acta.jurado_3.nombre }}</th>
+            </tr>
+            
+        </thead>
+    </table>
+    <table>
+        <h2 class="descripcion">RESULTADOS DE LA EVALUACIÓN</h2>
+        <thead>
+            <tr>
+                <th id="descrip">ASPECTOS A EVALUAR</th>
+                <th class="des">VALORACIÓN CUANTITATIVA
+                    PROMEDIOS
+                    </th>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th id="descrip">Presentación y contenido del trabajo  (Hasta 30 Puntos)</th>
+                <th class="des">{{ acta.calificacion1 }}</th>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th id="descrip">Defensa del Trabajo  (Hasta 70 Puntos)</th>
+                <th class="des">{{ acta.calificacion2 }}</th>
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th id="descrip">CALIFICACIÓN TOTAL 
+                </th>
+                <th class="des">{{ acta.notatotal }}</th>
+            </tr>
+        </thead>
+        
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th id="descrip">
+                    <ul>
+                        <li>
+                            CONSIDERACIONES FINALES: La Defensa Publica Fue {{ acta.get_resultado_display }}
+                        </li>
+                        <li>
+                            1ra. Comentario evaluativo: {{ acta.observacion_1 }}
+                        </li>
+                        <li>
+                            2do. Comentario evaluativo: {{ acta.observacion_2 }}
+                        </li>
+                        <li>
+                            3er. Comentario evaluativo: {{ acta.observacion_3 }}
+                        </li>
+
+                        
+                    </ul>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <table id="firm">
+        <div class="contfirmapresidente letrafirmas"><br><br>
+            {% if presidenteacta_firma_url %}
+                <img src="{{ presidenteacta_firma_url }}" alt="Firma" class="firma"><br>
+                {% else %}
+                <p>Sin firma</p>
+            {% endif %}
+            PRESIDENTE<br>                    
+            {{ acta.presidenteacta.apellido }} {{ acta.presidenteacta.nombre }}
+        </div><br>
+        <thead id="firm">
+            <tr id="firm">
+                <th id="firm" class="contfirma">
+                    {% if jurado_1_firma_url %}
+                    <img src="{{ jurado_1_firma_url }}" alt="Firma" class="firma"><br>
+                    {% else %}
+                    <p>Sin firma disponible</p>
+                    {% endif %}
+                    PRIMER TRIBUNAL
+                    <br>
+                    {{ acta.jurado_1.apellido }} {{ acta.jurado_1.nombre }}
+                </th>
+                <th id="firm" class="contfirma">
+                    {% if jurado_2_firma_url %}
+                    <img src="{{ jurado_2_firma_url }}" alt="Firma" class="firma"><br>
+                    {% else %}
+                    <p>Sin firma disponible</p>
+                    {% endif %}
+                    SEGUNDO TRIBUNAL
+                    <br>
+                    {{ acta.jurado_2.apellido }} {{ acta.jurado_2.nombre }}
+                </th>
+                <th  id="firm" class="contfirma">
+                    {% if jurado_3_firma_url %}
+                    <img src="{{ jurado_3_firma_url }}" alt="Firma" class="firma"><br>
+                    {% else %}
+                    <p>Sin firma disponible</p>
+                    {% endif %}
+                    TERCER TRIBUNAL
+                    <br>
+                    {{ acta.jurado_3.apellido }} {{ acta.jurado_3.nombre }}
+                </th>
+                
+            </tr>
+        </thead>
+        
+    </table>
+    
+    <p>Asignatura de Modalidad de Graduación</p>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Repositorios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+        }
+        .title {
+            margin: 2px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            table-layout: fixed; /* Asegura que la tabla respete el ancho de las celdas */
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 3px;
+            overflow: hidden; /* Oculta el contenido desbordado en la celda */
+            text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
+            white-space: nowrap; /* Evita que el texto se ajuste a múltiples líneas */
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .des {
+            width: 200px;
+        }
+        .descrip {
+            width: 300px;
+            overflow-wrap: break-word; /* Ajusta el texto largo dentro de la celda */
+            word-break: break-word; /* Fuerza la ruptura de palabras largas */
+        }
+        .textfirma {
+            text-align: center;
+        }
+        .text {
+            text-align: center;
+            font-size: 25px;
+        }
+        .text1 {
+            text-align: center;
+            font-size: 18px;
+        }
+        .firma {
+            width: 100px; /* Ajusta el tamaño de la firma */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text">UNIVERSIDAD AUTONOMA DEL BENI JOSE BALLIVIAN</h1>
+    <h2 class="text1">CARRERA DE INGENIERIA DE SISTEMAS</h2>
+    {% for actividad in actividades_repositorio %}
+    <hr>
+    <h3 class="title">REPORTE DE EGRESADOS PROYECTO FINAL</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Estudiante</th>
+                <th>Modalidad Optada</th>
+                <th>Tutor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ actividad.fecha }}</td>
+                <td>{{ actividad.estudiante.apellido }} {{ actividad.estudiante.nombre }} </td>
+                <td>{{ actividad.modalidad }}</td>
+                <td>{{ actividad.tutor.apellido }} {{ actividad.tutor.nombre }}</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th>1er.Tribunal</th>
+                <th>2do.Tribunal</th>
+                <th>3er.Tribunal</th>
+                <th>Tutor Externo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ actividad.jurado_1.apellido }} {{ actividad.jurado_1.nombre }}</td>
+                <td>{{ actividad.jurado_2.apellido }} {{ actividad.jurado_2.nombre }} </td>
+                <td>{{ actividad.jurado_3.apellido }} {{ actividad.jurado_3.nombre }} </td>
+                <td>{{ actividad.guia_externo }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Titulo Proyecto</th>
+                <th>Descripción</th>
+                <th>Periodo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="descrip">{{ actividad.titulo }}</td>
+                <td class="descrip">{{ actividad.resumen }}</td>
+                <td>{{ actividad.periodo }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Año Egreso</th>
+                <th>N° de Acta</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ actividad.anio_egreso }}</td>
+                <td>{{ actividad.numero_acta }}</td>
+                <td>{{ actividad.nota_aprobacion }}</td>
+            </tr>
+        </tbody>
+    </table><br><br><br>
+    <h3 class="title">U.A.B C.I.S ASIGNATURA DE MODALIDAD DE GRADUACIÓN</h3>
+    <br><br><br><br>
+    {% endfor %}
+</body>
+</html>

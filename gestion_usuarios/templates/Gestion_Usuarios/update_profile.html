@@ -1,0 +1,152 @@
+{% extends "dashboard.html" %}
+{% load static %}
+{% block content %}
+<div class="p-lg-5 p-2 container fontII no-gutters">
+    <div class="container  p-lg-5  p-0 no-gutte">
+        <h2 class="titlegeneral pb-3">Editar Datos de mi Perfil de Usuario <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-person-vcard" viewBox="0 0 16 16">
+            <path d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5"/>
+            <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z"/>
+          </svg>
+        </h2>
+        {% if errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <form id="update-user-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row radio-border= 50%">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        {{ form.imagen.label_tag }}
+                        {{ form.imagen }}
+                        {{ form.imagen.errors }}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <img id="preview" src="{% if form.instance.imagen %}{{ form.instance.imagen.url }}{% endif %}" 
+                             alt="Vista previa de la imagen" 
+                             style="max-width: 150px; height: 150px; border-radius: 50%;">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 form-group">
+                    {{ form.nombre.label_tag }}
+                    {{ form.nombre }}
+                </div>
+                <div class="col-6 form-group">
+                    {{ form.apellido.label_tag }}
+                    {{ form.apellido }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-12 form-group">
+                    {{ form.fecha_nac.label_tag }}
+                    {{ form.fecha_nac }}
+                    {{ form.fecha_nac.errors }}
+                </div>
+                <div class=" col-lg-8 col-12 form-group">
+                    {{ form.ci.label_tag }}
+                    {{ form.ci }}
+                    {{ form.ci.errors }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 form-group">
+                    {{ form.Ru.label_tag }}
+                    {{ form.Ru }}
+                    {{ form.Ru.errors }}
+                </div>
+                <div class="col-lg-6 col-12 form-group">
+                    {{ form.telefono.label_tag }}
+                    {{ form.telefono }}
+                </div>
+            </div>
+            <p class="text colorestados fontI"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+              </svg> Importante para subir una firma debe segir ordenes
+              <li class="px-3 text colorestados fontII"> La imagen tiene que ser formato: "png"</li>
+              <li class="px-3 text colorestados fontII"> El tamaño de la imagen tiene que ser: "257 x 196"</li>
+            </p>
+            <div class="row">
+                <div class="col-lg-6 col-12 form-group">
+                    {{ form.firma.label_tag }}
+                    {{ form.firma }}
+                    {{ form.firma.errors }}
+                </div>
+                <div class="col-lg-6 col-12 form-group">
+                    <img id="preview-firma" src="{% if form.instance.firma %}{{ form.instance.firma.url }}{% endif %}" 
+                         alt="Vista previa de la firma" 
+                         style="max-width: 150px; height: 150px; border-radius: 5px;">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-dark">Guardar</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancelar Cambios</a>
+        </form><br>
+    </div>
+</div><br><br>
+
+<script>
+    document.getElementById('id_imagen').addEventListener('change', function(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var preview = document.getElementById('preview');
+            preview.src = dataURL;
+            preview.style.display = 'block';
+        };
+        
+        if (input.files.length > 0) {
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('preview').style.display = 'none';
+        }
+    });
+
+    document.getElementById('id_firma').addEventListener('change', function(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        
+        reader.onload = function(){
+            var dataURL = reader.result;
+            var previewFirma = document.getElementById('preview-firma');
+            previewFirma.src = dataURL;
+            previewFirma.style.display = 'block';
+        };
+        
+        if (input.files.length > 0) {
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('preview-firma').style.display = 'none';
+        }
+    });
+
+    // Mostrar la imagen previa si existe al cargar la página
+    window.onload = function() {
+        var preview = document.getElementById('preview');
+        if (preview.src) {
+            preview.style.display = 'block';
+        }
+
+        var previewFirma = document.getElementById('preview-firma');
+        if (previewFirma.src) {
+            previewFirma.style.display = 'block';
+        }
+    };
+</script>
+
+{% endblock %}

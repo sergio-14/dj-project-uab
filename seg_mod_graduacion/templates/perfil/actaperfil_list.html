@@ -1,0 +1,133 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="container no-gutters px-lg-5 px-1">
+    <h1 class="titlesuperior colortext py-4">Reporte Investigaciones Científicas
+        <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
+            <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z"/>
+            <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z"/>
+        </svg>
+    </h1>
+    
+    <!-- Formulario de búsqueda -->
+    <form method="GET" action="">
+        <div class="row">
+            <div class="col-lg-10 col-8 form-group">
+                <input type="text" name="q" class="form-control" placeholder="Buscar por nombre del estudiante">
+            </div>
+            <div class="col-lg-1 col-3 mt-1">
+                <button type="submit" class="btn btn-dark px-lg-3">Buscar</button>
+            </div>
+        </div>
+    </form>
+   
+    <hr>
+    
+    <!-- Mostrar todas las actividades científicas relacionadas -->
+    {% for acta in actas %}
+    <div class="no-guttee mb-5 fontI">
+        <div class="row py-5">
+            <div class="col-md-9 px-5 text-wrap">
+                <!-- Your existing content for displaying actas -->
+                <div class="row">
+                    <div class="col-lg-4 col-12 text-center">
+                        <p class="fecha colortext ">Fecha: <span class="colorestados">{{ acta.fechadefensa }} - {{ acta.lugar }}</span></p>
+                    </div>
+                    <div class="col-lg-4 col-12 text-center">
+                        <p class="fecha colortext ">Hora de: <span class="colorestados"> {{ acta.horainicio }}</span> a: <span class="colorestados"> {{ acta.horafin }}</span></p>
+                    </div>
+                    <div class="col-lg-4 col-12 text-center">
+                        <p class="fecha colortext ">Periodo y Gestión: <span class="colorestados"> {{ acta.perperiodo }}</span></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-12 text-center">
+                        <p class="fecha colortext ">Numero Acta: <span class="colorestados">{{ acta.acta }}</span></p>
+                    </div >
+                    <div class="col-lg-4 col-12 text-center">
+                        <p class="fecha colortext ">Facultad: {{ acta.get_facultad_display }}</p>
+                    </div>
+                    <div class="col-lg-4 col-12 text-center">
+                        <p class="fecha colortext ">Carreta: {{ acta.get_carrera_display }}</p>
+                    </div>
+                </div>
+                <p class="title colortext text-center">Título: {{ acta.titulo }}</p>
+                <div class="row">
+                    <div class="col-lg-5 col-12 text-center">
+                        <p class="fecha colortext ">Tutur:<br> {{ acta.tutor.nombre }} {{ acta.tutor.apellido }}</p>
+                    </div >
+                    <div class="col-lg-3 col-6 text-center">
+                        <p class="fecha colortext ">Modalidad:<br> {{ acta.modalidad }}</p>
+                    </div>
+                    <div class="col-lg-3 col-6 text-center">
+                        <p class="fecha colortext ">Calificación:<br> <span class="colorestados">{{ acta.get_resultado_display }}</span></p>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-6 text-center">
+                        <p class="fecha colortext ">1er. Tribunal:<br> {{ acta.jurado_1.nombre }} {{ acta.jurado_1.apellido }}</p>
+                    </div >
+                    <div class="col-lg-4 col-6 text-center">
+                        <p class="fecha colortext ">2do. Tribunal:<br> {{ acta.jurado_2.nombre }} {{ acta.jurado_2.apellido }}</p>
+                    </div>
+                    <div class="col-lg-4 col-6 text-center">
+                        <p class="fecha colortext ">3er. Tribunal:<br> {{ acta.jurado_3.nombre }} {{ acta.jurado_3.apellido }}</p>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 col-12 ">
+                        <p class="fecha colortext ">1er. Observación:  <span class="colorestados fechas">{{ acta.observacion_1 }}</span></p>
+                    </div >
+                    <div class="col-lg-10 col-12 ">
+                        <p class="fecha colortext ">2do. Observación:  <span class="colorestados fechas">{{ acta.observacion_2 }}</span></p>
+                    </div>
+                    <div class="col-lg-10 col-12 ">
+                        <p class="fecha colortext ">3er. Observación:  <span class="colorestados fechas">{{ acta.observacion_3 }}</span></p>
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-3 pt-4 d-flex flex-column align-items-center">
+                {% if acta.estudiante.imagen %}
+                <div class="mb-5">
+                    <img src="{{ acta.estudiante.imagen.url }}" class="imgrepo" alt="sin foto" />
+                </div>
+                {% else %}
+                <div class="mb-3">
+                    <img src="{% static 'img/SINFOTO.webp' %}" class="imgrepo" alt="" />
+                </div>
+                {% endif %}
+                <h5 class="text colortext text-center">Estudiante:<br> {{ acta.estudiante.nombre }} {{ acta.estudiante.apellido }}</h5>
+                {% if acta.pk %}
+                <a class="btn btn-sm btn-dark fontII" href="{% url 'Pdf_ReporteActa' pk=acta.pk %}" target="_blank">General Reporte Acta</a>
+                {% else %}
+                <span>No Acta available</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    <!-- Paginación -->
+    <nav>
+        <ul class="pagination">
+            {% if actas.has_previous %}
+                <li class="page-item"><a class="btn btn-sm btn-dark me-1" href="?page=1{% if query %}&q={{ query }}{% endif %}">Primero</a></li>
+                <li class="page-item"><a class="btn btn-sm btn-dark" href="?page={{ actas.previous_page_number }}{% if query %}&q={{ query }}{% endif %}">Anterior</a></li>
+            {% endif %}
+
+            <li class="page-item active"><a class="btn btn-sm btn-light">{{ actas.number }}</a></li>
+
+            {% if actas.has_next %}
+                <li class="page-item"><a class="btn btn-sm btn-dark me-1" href="?page={{ actas.next_page_number }}{% if query %}&q={{ query }}{% endif %}">Siguiente</a></li>
+                <li class="page-item"><a class="btn btn-sm btn-dark" href="?page={{ actas.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}">Último</a></li>
+            {% endif %}
+        </ul>
+    </nav><br>
+</div><br>
+{% endblock %}
+
+

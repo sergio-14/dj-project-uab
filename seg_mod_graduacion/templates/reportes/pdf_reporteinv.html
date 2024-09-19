@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Investigación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0px;
+        }
+        .title {
+            margin: 2px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+          padding: 3px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .des{
+          width: 200px;
+        }
+        .textfirma{
+          text-align: center;
+        }
+        .text{
+          text-align: center;
+          font-size: 25px;
+        }
+        .text1{
+          text-align: center;
+          font-size: 18px;
+        }
+        .firma {
+            width: 100px; /* Ajusta el tamaño de la firma */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="text">UNIVERSIDAD AUTONOMA DEL BENI JOSE BALLIVIAN <span class="text1">CARRERA DE INGENIERIA DE SISTEMAS</span></h1>
+    
+    <h3 class="">REPORTE DE ALCANCE INVESTIGACIÓN CIENTÍFICA</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Estudiante</th>
+                <th>Título</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+                <td>{{ actividad.invfecha_creacion }}</td>
+                <td>{{ actividad.user.apellido }} {{ actividad.user.nombre }}</td>
+                <td class="des">{{ actividad.invtitulo }}</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Revisión</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="des">{{ actividad.invdescripcion }}</td>
+                <td>{{ actividad.investado }}</td>
+                {% for comentario in comentarios %}
+                <td class="des">
+                    {{ comentario.user.apellido }} {{ comentario.user.nombre }} <br>
+                    {{ comentario.invcomentario }}
+                </td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    
+        <ul >
+          {% if comentario.user.firma_url %}
+          <img src="{{ comentario.user.firma_url }}" alt="Firma" class="firma"><br>
+          {% else %}
+          <p>Sin firma disponible</p>
+          {% endif %}
+          <span>{{ comentario.user.apellido }} {{ comentario.user.nombre }}<br>
+          Encargado Modalida Graduación</span>
+
+          {% endfor %}
+        </ul>
+    
+    <hr>
+</body>
+</html>
